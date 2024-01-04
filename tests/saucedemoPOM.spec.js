@@ -20,8 +20,10 @@ test.describe('Complete flow for standard user', () => {
 
     // Navigate to the login page and login
     await loginPage.goToLoginPage();
+    await loginPage.fillUsername('standard_user');
+    await loginPage.fillPassword('secret_sauce');
+    await loginPage.clickLoginButton();
     await page.pause();
-    await loginPage.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 
     // Add items to the cart and go to the cart
@@ -35,7 +37,11 @@ test.describe('Complete flow for standard user', () => {
     await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html');
 
     // Fill checkout information and continue
-    await checkoutInformationPage.fillCheckoutInformation('Test', 'Perez', '123');
+    //await checkoutInformationPage.fillCheckoutInformation('Test', 'Perez', '123');
+    await checkoutInformationPage.fillFirstName('Test');
+    await checkoutInformationPage.fillLastName('User');
+    await checkoutInformationPage.fillZipCode('12345');
+    await checkoutInformationPage.clickContinueButton();
     await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
 
     // Finish checkout
